@@ -1,0 +1,23 @@
+flows:
+  experimental_research:
+    description: Helps users generate hypothesis from scientific text and perform validation tests.
+    steps:
+      - collect: abstract_text
+        description: The scientific abstract provided by the user for analysis.
+      - action: action_extract_hypothesis
+      - collect: run_regression
+        description: Whether the user wants to test the hypotheses using symbolic regression (yes/no).
+        next:
+          - if not slots.run_regression:
+            then:
+              - action: utter_terminate_analysis
+                next: END
+            else:
+              - collect: dataset_url
+                description: URL or path to dataset used for symbolic regression
+              - action: action_test_hypothesis
+              - action: utter_analysis_complete
+                next: END
+
+
+

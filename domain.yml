@@ -1,0 +1,45 @@
+version: "3.1"
+
+slots:
+  abstract_text:
+    type: text
+    mappings:
+      - type: from_llm
+  run_regression:
+    type: bool
+    mappings:
+      - type: from_llm
+  dataset_url:
+    type: text
+    mappings:
+      - type: from_llm
+
+actions:
+  - action_extract_hypothesis
+  - action_test_hypothesis
+
+responses:
+  utter_ask_abstract_text:
+    - text: "Please provide a scientific abstract from a paper to extract hypothesis"
+  utter_ask_run_regression:
+    - text: "Do you want to test the hypothesis using symbolic regression ?"
+  utter_ask_dataset_url:
+    - text: "Please provide the link to a dataset to run the experiment."
+  utter_analysis_complete:
+    - text: "✅ Your analysis is complete. Let me know if you’d like to explore more abstracts!"
+  utter_terminate_analysis:
+    - text: "Okay stopping your analysis"
+
+  utter_free_chitchat_response:
+    - text: "placeholder"
+      metadata:
+        rephrase: True
+        rephrase_prompt: |
+          The following is a conversation with an AI assistant built with Rasa.
+          The assistant can help the user transfer money.
+          The assistant is helpful, creative, clever, and very friendly.
+          The user is making small talk, and the assistant should respond, keeping things light.
+          Context / previous conversation with the user:
+          {{history}}
+          {{current_input}}
+          Suggested AI Response:
